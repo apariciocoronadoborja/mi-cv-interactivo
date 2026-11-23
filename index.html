@@ -1,0 +1,2966 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Currículum Interactivo con IA | Borja Aparicio Coronado</title>
+  <meta name="description" content="Currículum interactivo profesional con vídeos, diseño tecnológico, asistente virtual con Gemini y RAG." />
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  
+  <!-- Marked.js para formatear respuestas Markdown de la IA -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <style>
+    :root {
+      /* Fondo tecnológico: Base #F8FAFC (blanco humo) */
+      --bg-primary: #F8FAFC;
+      --bg-secondary: #FFFFFF;
+      --bg-card: rgba(255, 255, 255, 0.92);
+      --bg-card-hover: #FFFFFF;
+      --border-color: rgba(203, 213, 225, 0.7);
+      --border-color-focus: #38BDF8;
+      
+      /* Acentos tecnológicos */
+      --tech-cyan: #38BDF8;
+      --tech-cyan-glow: rgba(56, 189, 248, 0.4);
+      --tech-blue: #0284C7;
+      --tech-grid: #CBD5E1;
+      --accent-gradient: linear-gradient(135deg, #0284C7 0%, #38BDF8 50%, #6366F1 100%);
+      --accent-glow: rgba(56, 189, 248, 0.25);
+      
+      /* Tipografía con alto contraste y nitidez */
+      --text-main: #0F172A;
+      --text-muted: #475569;
+      --text-subtle: #94A3B8;
+      
+      /* Estados */
+      --success: #10B981;
+      --success-bg: rgba(16, 185, 129, 0.1);
+      --warning: #F59E0B;
+      --warning-bg: rgba(245, 158, 11, 0.1);
+      --danger: #EF4444;
+      --danger-bg: rgba(239, 68, 68, 0.1);
+      
+      /* Bordes y Sombras */
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-full: 9999px;
+      --shadow-sm: 0 2px 5px rgba(15, 23, 42, 0.05);
+      --shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.07), 0 4px 10px -2px rgba(15, 23, 42, 0.03);
+      --shadow-lg: 0 20px 35px -8px rgba(15, 23, 42, 0.09), 0 8px 16px -4px rgba(15, 23, 42, 0.04);
+      --shadow-glow: 0 0 25px rgba(56, 189, 248, 0.25);
+      
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      color-scheme: light;
+    }
+
+    /* =========================================
+       FONDO TECNOLÓGICO GLOBAL:
+       Base #F8FAFC con patrón de nodos y conexiones en #CBD5E1 al 15% de opacidad
+       ========================================= */
+    body {
+      background-color: var(--bg-primary);
+      /* Patrón sutil de red neuronal: nodos y conexiones en #CBD5E1 al 15% */
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.07) 0%, transparent 50%),
+        radial-gradient(circle at 100% 100%, rgba(99, 102, 241, 0.05) 0%, transparent 40%),
+        url("data:image/svg+xml,%3Csvg width='140' height='140' viewBox='0 0 140 140' xmlns='http://www.w3.org/2000/svg'%3E%3Cg stroke='%23CBD5E1' stroke-width='1.2' stroke-opacity='0.15' fill='none'%3E%3Cline x1='20' y1='25' x2='70' y2='70' /%3E%3Cline x1='70' y1='70' x2='120' y2='30' /%3E%3Cline x1='70' y1='70' x2='35' y2='115' /%3E%3Cline x1='70' y1='70' x2='105' y2='110' /%3E%3Cline x1='20' y1='25' x2='120' y2='30' stroke-dasharray='4,4' /%3E%3Cline x1='35' y1='115' x2='105' y2='110' /%3E%3Cline x1='20' y1='25' x2='35' y2='115' /%3E%3C/g%3E%3Cg fill='%23CBD5E1' fill-opacity='0.15'%3E%3Ccircle cx='20' cy='25' r='3.5' /%3E%3Ccircle cx='70' cy='70' r='4.5' /%3E%3Ccircle cx='120' cy='30' r='3.5' /%3E%3Ccircle cx='35' cy='115' r='3.5' /%3E%3Ccircle cx='105' cy='110' r='3.5' /%3E%3C/g%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-attachment: fixed;
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* =========================================
+       NAVEGACIÓN SUPERIOR TECNOLÓGICA
+       ========================================= */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      background: rgba(248, 250, 252, 0.88);
+      border-bottom: 1px solid var(--border-color);
+      padding: 0.85rem 0;
+      box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03);
+    }
+
+    .navbar-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: var(--text-main);
+      font-weight: 700;
+      font-size: 1.15rem;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-badge {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-sm);
+      background: var(--accent-gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      box-shadow: 0 0 16px var(--accent-glow);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    /* Botón Configuración de API Key */
+    .btn-key-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.45rem 0.95rem;
+      border-radius: var(--radius-full);
+      font-size: 0.825rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--border-color);
+      background: #FFFFFF;
+      color: var(--text-main);
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-key-status:hover {
+      background: #F1F5F9;
+      border-color: var(--tech-cyan);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(56, 189, 248, 0.15);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--warning);
+      box-shadow: 0 0 8px var(--warning);
+      animation: pulse 2s infinite;
+    }
+
+    .status-dot.active {
+      background-color: var(--success);
+      box-shadow: 0 0 8px var(--success);
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(0.9); }
+    }
+
+    /* =========================================
+       ESCENA 1: CABECERA & PERFIL PROFESIONAL
+       ========================================= */
+    .hero-section {
+      padding: 4.5rem 0 3.5rem;
+      position: relative;
+    }
+
+    .hero-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 3.5rem;
+    }
+
+    .hero-text-col {
+      text-align: left;
+    }
+
+    .hero-text-col .hero-subtitle {
+      margin: 0 0 2rem 0;
+    }
+
+    .hero-text-col .contact-links {
+      justify-content: flex-start;
+      margin-bottom: 0;
+    }
+
+    .hero-image-col {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .hero-image-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 490px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero-image-glow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 105%;
+      height: 105%;
+      border-radius: var(--radius-lg);
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.28) 0%, rgba(2, 132, 199, 0.08) 50%, transparent 75%);
+      filter: blur(20px);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .hero-profile-img {
+      width: 100%;
+      height: auto;
+      max-height: 520px;
+      object-fit: cover;
+      object-position: top center;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(56, 189, 248, 0.45);
+      box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.14), 0 0 25px rgba(56, 189, 248, 0.2);
+      position: relative;
+      z-index: 2;
+      background: #FFFFFF;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .hero-profile-img:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 25px 50px -10px rgba(15, 23, 42, 0.18), 0 0 35px rgba(56, 189, 248, 0.35);
+      border-color: var(--tech-cyan);
+    }
+
+    .hero-image-tech-badge {
+      position: absolute;
+      bottom: -14px;
+      z-index: 3;
+      background: #FFFFFF;
+      border: 1px solid rgba(56, 189, 248, 0.55);
+      border-radius: var(--radius-full);
+      padding: 0.35rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #0369A1;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 4px 15px rgba(15, 23, 42, 0.08);
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1.15rem;
+      background: rgba(2, 132, 199, 0.08);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      border-radius: var(--radius-full);
+      color: #0369A1;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 8px rgba(56, 189, 248, 0.1);
+    }
+
+    .hero-title {
+      font-size: clamp(2.3rem, 5vw, 3.8rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+      color: #0F172A;
+    }
+
+    .gradient-text {
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.05rem, 2vw, 1.3rem);
+      color: var(--text-muted);
+      max-width: 760px;
+      margin: 0 auto 2.25rem;
+      font-weight: 400;
+      line-height: 1.6;
+    }
+
+    /* Enlaces de Contacto */
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.85rem;
+      margin-bottom: 2rem;
+    }
+
+    .btn-contact {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.7rem 1.35rem;
+      border-radius: var(--radius-full);
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      color: var(--text-main);
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      transition: all 0.25s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-contact:hover {
+      background: #F8FAFC;
+      border-color: var(--tech-cyan);
+      color: #0284C7;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px -4px rgba(56, 189, 248, 0.25);
+    }
+
+    .btn-primary-action {
+      background: var(--accent-gradient);
+      color: #FFFFFF !important;
+      border: none;
+    }
+
+    .btn-primary-action:hover {
+      opacity: 0.96;
+      box-shadow: 0 10px 25px -4px rgba(2, 132, 199, 0.45);
+    }
+
+    /* =========================================
+       ESCENA 2: TARJETAS DE VÍDEO MULTIMEDIA
+       ========================================= */
+    .section-container {
+      padding: 4rem 0;
+      position: relative;
+    }
+
+    .section-header {
+      margin-bottom: 2.75rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .section-tag {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #0284C7;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      display: inline-block;
+      background: rgba(2, 132, 199, 0.08);
+      padding: 0.25rem 0.75rem;
+      border-radius: var(--radius-full);
+    }
+
+    .section-title {
+      font-size: 2.15rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #0F172A;
+      margin-top: 0.4rem;
+    }
+
+    .section-desc {
+      color: var(--text-muted);
+      max-width: 620px;
+      margin: 0.65rem auto 0;
+      font-size: 0.98rem;
+    }
+
+    .video-playlist-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
+    }
+
+    .btn-playlist-play-all {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.65rem 1.4rem;
+      border-radius: var(--radius-full);
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      background: var(--accent-gradient);
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(2, 132, 199, 0.3);
+      transition: all 0.25s ease;
+    }
+
+    .btn-playlist-play-all:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba(56, 189, 248, 0.45);
+    }
+
+    .autoplay-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #FFFFFF;
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      border-radius: var(--radius-full);
+      padding: 0.45rem 1rem;
+      font-size: 0.825rem;
+      font-weight: 600;
+      color: #0369A1;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Contenedor Carrusel de vídeos horizontal con scroll suave y controles */
+    /* Contenedor Carrusel de vídeos horizontal con scroll suave y controles */
+    .videos-carousel-wrapper {
+      position: relative;
+      max-width: 1140px;
+      margin: 0 auto;
+    }
+
+    .videos-nav-btn {
+      position: absolute;
+      top: 48%;
+      transform: translateY(-50%);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(56, 189, 248, 0.5);
+      color: #0284C7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      box-shadow: 0 8px 24px -4px rgba(15, 23, 42, 0.15), 0 0 15px rgba(56, 189, 248, 0.25);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .videos-nav-btn:hover:not(:disabled) {
+      background: #0284C7;
+      color: #FFFFFF;
+      border-color: #0284C7;
+      transform: translateY(-50%) scale(1.12);
+      box-shadow: 0 14px 28px -4px rgba(2, 132, 199, 0.45);
+    }
+
+    .videos-nav-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+      transform: translateY(-50%) scale(0.95);
+      box-shadow: none;
+    }
+
+    .videos-nav-prev {
+      left: -24px;
+    }
+
+    .videos-nav-next {
+      right: -24px;
+    }
+
+    @media (max-width: 1180px) {
+      .videos-nav-prev { left: 8px; }
+      .videos-nav-next { right: 8px; }
+    }
+
+    /* Grid con scroll horizontal fluido y snap */
+    .videos-grid {
+      display: flex;
+      flex-direction: row;
+      gap: 2rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      padding: 1rem 0.5rem 1.8rem;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-x: contain;
+    }
+
+    /* Scrollbar personalizada visible y atractiva */
+    .videos-grid::-webkit-scrollbar {
+      height: 9px;
+    }
+    .videos-grid::-webkit-scrollbar-track {
+      background: #E2E8F0;
+      border-radius: 999px;
+      margin: 0 40px;
+    }
+    .videos-grid::-webkit-scrollbar-thumb {
+      background: linear-gradient(90deg, #0284C7, #38BDF8);
+      border-radius: 999px;
+      box-shadow: 0 0 8px rgba(56, 189, 248, 0.4);
+    }
+    .videos-grid::-webkit-scrollbar-thumb:hover {
+      background: #0284C7;
+    }
+
+    /* Tarjeta de vídeo dividida: Vídeo a la izquierda + Servicios a la derecha */
+    .video-card {
+      flex: 0 0 100%;
+      min-width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+      scroll-snap-align: center;
+      scroll-snap-stop: always;
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 45% 55%;
+      align-items: stretch;
+      transition: all 0.35s ease;
+      box-shadow: 0 15px 35px -8px rgba(15, 23, 42, 0.08), 0 0 20px rgba(56, 189, 248, 0.05);
+      position: relative;
+    }
+
+    @media (max-width: 960px) {
+      .video-card {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .video-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--tech-cyan);
+      box-shadow: 0 25px 45px -10px rgba(15, 23, 42, 0.12), 0 0 25px rgba(56, 189, 248, 0.2);
+    }
+
+    .video-card.active-playing {
+      border-color: #38BDF8;
+      box-shadow: 0 25px 55px -10px rgba(15, 23, 42, 0.16), 0 0 35px rgba(56, 189, 248, 0.4);
+    }
+
+    /* Columna Izquierda: Reproductor de Vídeo (espacio ajustado) */
+    .video-card-media {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: #020617;
+      position: relative;
+      border-right: 1px solid var(--border-color);
+      overflow: hidden;
+    }
+
+    @media (max-width: 960px) {
+      .video-card-media {
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+      }
+    }
+
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%; /* 16:9 Aspect Ratio */
+      background: #020617;
+      overflow: hidden;
+    }
+
+    .video-wrapper video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      background: #020617;
+      z-index: 2;
+    }
+
+    .video-badge {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      z-index: 4;
+      background: rgba(15, 23, 42, 0.88);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #FFFFFF;
+      padding: 0.3rem 0.8rem;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .video-unmute-badge {
+      position: absolute;
+      bottom: 14px;
+      left: 14px;
+      z-index: 10;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: rgba(15, 23, 42, 0.88);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(56, 189, 248, 0.5);
+      color: #FFFFFF;
+      padding: 0.4rem 0.85rem;
+      border-radius: var(--radius-full);
+      font-size: 0.785rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
+    }
+
+    .video-unmute-badge:hover {
+      background: #0284C7;
+      border-color: #38BDF8;
+      transform: scale(1.05);
+    }
+
+    /* Columna Derecha: Explicación de Servicios Ofrecidos */
+    .video-card-services {
+      padding: 2.25rem 2.4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: #FFFFFF;
+    }
+
+    @media (max-width: 650px) {
+      .video-card-services {
+        padding: 1.5rem 1.25rem;
+      }
+    }
+
+    .services-header-badge-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.65rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .services-headline {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #0F172A;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.4rem;
+      line-height: 1.3;
+    }
+
+    .services-intro-text {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.5;
+    }
+
+    .services-grid-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 650px) {
+      .services-grid-list {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .service-box {
+      background: #F8FAFC;
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      border-radius: var(--radius-md);
+      padding: 0.85rem 1rem;
+      transition: all 0.25s ease;
+    }
+
+    .service-box:hover {
+      background: #FFFFFF;
+      border-color: var(--tech-cyan);
+      box-shadow: 0 6px 16px -2px rgba(56, 189, 248, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .service-box-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .service-box-icon {
+      font-size: 1.15rem;
+      line-height: 1;
+    }
+
+    .service-box-title {
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: #0F172A;
+      line-height: 1.3;
+    }
+
+    .service-box-desc {
+      font-size: 0.775rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+      margin: 0;
+    }
+
+    .services-cta-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-color);
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-ask-service {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.825rem;
+      font-weight: 700;
+      color: #0284C7;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-ask-service:hover {
+      color: #0369A1;
+      transform: translateX(3px);
+    }
+
+    /* Píldoras de navegación / selección de vídeo */
+    .carousel-pills-row {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-top: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    .carousel-pill-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1.15rem;
+      border-radius: var(--radius-full);
+      font-size: 0.825rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .carousel-pill-btn:hover {
+      color: #0284C7;
+      border-color: var(--tech-cyan);
+      background: #F8FAFC;
+      transform: translateY(-1px);
+    }
+
+    .carousel-pill-btn.active {
+      color: #FFFFFF;
+      background: var(--accent-gradient);
+      border-color: transparent;
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+    }
+
+    .video-seq-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #0284C7;
+      background: rgba(2, 132, 199, 0.08);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 0.25rem 0.75rem;
+      border-radius: var(--radius-full);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+
+    .video-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.5rem;
+    }
+
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%; /* 16:9 Aspect Ratio */
+      background: #020617;
+      overflow: hidden;
+    }
+
+    .video-wrapper video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      background: #020617;
+      z-index: 2;
+    }
+
+    .video-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      z-index: 4;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #FFFFFF;
+      padding: 0.25rem 0.75rem;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .video-content {
+      padding: 1.6rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .video-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #0F172A;
+    }
+
+    .video-description {
+      font-size: 0.925rem;
+      color: var(--text-muted);
+      margin-bottom: 1.35rem;
+      line-height: 1.55;
+    }
+
+    .video-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-top: auto;
+    }
+
+    .tag {
+      background: #F1F5F9;
+      border: 1px solid var(--border-color);
+      color: #334155;
+      font-size: 0.75rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+    }
+
+    .video-fallback-msg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 1.5rem;
+      background: linear-gradient(180deg, #0F172A 0%, #1E293B 100%);
+      color: #94A3B8;
+      font-size: 0.85rem;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .video-fallback-msg svg {
+      margin-bottom: 0.75rem;
+      color: var(--tech-cyan);
+    }
+
+    .video-fallback-msg code {
+      background: rgba(0, 0, 0, 0.4);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      color: #38BDF8;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      margin-top: 0.4rem;
+    }
+
+    /* =========================================================================
+       ESCENA 3: INTENSIFICACIÓN DEL PATRÓN & CEREBRO DIGITAL ANIMADO EN #38BDF8
+       ========================================================================= */
+    #asistente-ia {
+      position: relative;
+      /* En la escena 3, el patrón se intensifica notablemente con mayor densidad y energía en #38BDF8 */
+      background: 
+        radial-gradient(circle at 50% 20%, rgba(56, 189, 248, 0.16) 0%, rgba(248, 250, 252, 0.95) 75%),
+        url("data:image/svg+xml,%3Csvg width='70' height='70' viewBox='0 0 70 70' xmlns='http://www.w3.org/2000/svg'%3E%3Cg stroke='%2338BDF8' stroke-width='1.3' stroke-opacity='0.42' fill='none'%3E%3Cline x1='10' y1='15' x2='35' y2='35' /%3E%3Cline x1='35' y1='35' x2='60' y2='15' /%3E%3Cline x1='35' y1='35' x2='20' y2='58' /%3E%3Cline x1='35' y1='35' x2='50' y2='58' /%3E%3Cline x1='10' y1='15' x2='60' y2='15' stroke-dasharray='2,2' /%3E%3Cline x1='20' y1='58' x2='50' y2='58' /%3E%3C/g%3E%3Cg fill='%2338BDF8' fill-opacity='0.55'%3E%3Ccircle cx='10' cy='15' r='3.2' /%3E%3Ccircle cx='35' cy='35' r='4.2' /%3E%3Ccircle cx='60' cy='15' r='3.2' /%3E%3Ccircle cx='20' cy='58' r='3' /%3E%3Ccircle cx='50' cy='58' r='3' /%3E%3C/g%3E%3C/svg%3E");
+      background-repeat: repeat;
+      border-top: 1px solid rgba(56, 189, 248, 0.25);
+    }
+
+    /* Contenedor del Cerebro Digital Animado en #38BDF8 */
+    .digital-brain-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 2rem;
+      position: relative;
+    }
+
+    .brain-glow-halo {
+      position: absolute;
+      width: 190px;
+      height: 190px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.35) 0%, rgba(56, 189, 248, 0.05) 60%, transparent 80%);
+      filter: blur(14px);
+      animation: brainHaloPulse 3s infinite ease-in-out;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @keyframes brainHaloPulse {
+      0%, 100% { transform: scale(0.92); opacity: 0.6; }
+      50% { transform: scale(1.15); opacity: 0.95; }
+    }
+
+    .digital-brain-svg {
+      width: 160px;
+      height: 140px;
+      position: relative;
+      z-index: 2;
+      filter: drop-shadow(0 0 14px rgba(56, 189, 248, 0.65));
+      animation: brainFloat 4s ease-in-out infinite;
+    }
+
+    @keyframes brainFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+
+    /* Animaciones de circuitos y sinapsis del cerebro */
+    .synapse-node {
+      animation: synapsisPulse 2s infinite ease-in-out;
+    }
+    .synapse-node:nth-child(2n) { animation-delay: 0.5s; }
+    .synapse-node:nth-child(3n) { animation-delay: 1s; }
+
+    @keyframes synapsisPulse {
+      0%, 100% { r: 3.5; opacity: 0.7; fill: #38BDF8; }
+      50% { r: 5.5; opacity: 1; fill: #7DD3FC; filter: drop-shadow(0 0 6px #38BDF8); }
+    }
+
+    .synapse-path {
+      stroke-dasharray: 8, 4;
+      animation: synapseDash 15s linear infinite;
+    }
+
+    @keyframes synapseDash {
+      to { stroke-dashoffset: -120; }
+    }
+
+    .brain-status-pill {
+      margin-top: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      background: #FFFFFF;
+      border: 1px solid rgba(56, 189, 248, 0.5);
+      border-radius: var(--radius-full);
+      padding: 0.35rem 1rem;
+      font-size: 0.825rem;
+      font-weight: 700;
+      color: #0369A1;
+      box-shadow: 0 4px 15px rgba(56, 189, 248, 0.15);
+      z-index: 2;
+    }
+
+    .brain-pulse-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background-color: var(--tech-cyan);
+      box-shadow: 0 0 10px var(--tech-cyan);
+      animation: pulse 1.6s infinite;
+    }
+
+    /* =========================================
+       CHAT INTERACTIVO (RAG & GEMINI)
+       ========================================= */
+    .chat-container {
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 25px 45px -10px rgba(15, 23, 42, 0.12), 0 0 30px rgba(56, 189, 248, 0.15);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      height: 680px;
+      max-width: 950px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .chat-header {
+      padding: 1.15rem 1.6rem;
+      background: #FFFFFF;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .chat-assistant-info {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .assistant-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #0284C7 0%, #38BDF8 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.45);
+    }
+
+    .assistant-title {
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: #0F172A;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .assistant-status {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .chat-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .model-badge {
+      background: rgba(2, 132, 199, 0.08);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      color: #0284C7;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.35rem 0.75rem;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .btn-icon {
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-icon:hover {
+      background: #F1F5F9;
+      color: #0284C7;
+      border-color: var(--tech-cyan);
+    }
+
+    /* Mensajes del Chat */
+    .chat-messages {
+      flex: 1;
+      padding: 1.5rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      scroll-behavior: smooth;
+      background: #F8FAFC;
+    }
+
+    .chat-messages::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .chat-messages::-webkit-scrollbar-thumb {
+      background: #CBD5E1;
+      border-radius: 3px;
+    }
+
+    .message {
+      display: flex;
+      gap: 0.85rem;
+      max-width: 85%;
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .message.user {
+      align-self: flex-end;
+      flex-direction: row-reverse;
+    }
+
+    .message.model {
+      align-self: flex-start;
+    }
+
+    .message-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .message.user .message-avatar {
+      background: #0284C7;
+      color: white;
+      box-shadow: 0 2px 8px rgba(2, 132, 199, 0.3);
+    }
+
+    .message.model .message-avatar {
+      background: linear-gradient(135deg, #0284C7 0%, #38BDF8 100%);
+      color: white;
+      box-shadow: 0 2px 8px rgba(56, 189, 248, 0.3);
+    }
+
+    .message-bubble {
+      padding: 0.95rem 1.25rem;
+      border-radius: 16px;
+      font-size: 0.935rem;
+      line-height: 1.6;
+      position: relative;
+      word-break: break-word;
+    }
+
+    .message.user .message-bubble {
+      background: linear-gradient(135deg, #0284C7 0%, #2563EB 100%);
+      color: #FFFFFF;
+      border-bottom-right-radius: 4px;
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.25);
+    }
+
+    .message.model .message-bubble {
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      color: #0F172A;
+      border-bottom-left-radius: 4px;
+      box-shadow: 0 3px 10px rgba(15, 23, 42, 0.04);
+    }
+
+    /* Formato Markdown dentro de las respuestas */
+    .message-bubble p {
+      margin-bottom: 0.65rem;
+    }
+    .message-bubble p:last-child {
+      margin-bottom: 0;
+    }
+    .message-bubble ul, .message-bubble ol {
+      margin: 0.5rem 0 0.75rem 1.25rem;
+    }
+    .message-bubble li {
+      margin-bottom: 0.35rem;
+    }
+    .message-bubble strong {
+      color: #0284C7;
+    }
+    .message.user strong {
+      color: #FFFFFF;
+    }
+    .message-bubble code {
+      background: #F1F5F9;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 0.85em;
+      color: #0369A1;
+      border: 1px solid #E2E8F0;
+    }
+
+    /* Sugerencias Rápidas */
+    .quick-prompts {
+      padding: 0.65rem 1.25rem;
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      border-top: 1px solid var(--border-color);
+      background: #FFFFFF;
+    }
+
+    .quick-prompts::-webkit-scrollbar {
+      display: none;
+    }
+
+    .prompt-chip {
+      white-space: nowrap;
+      background: #F8FAFC;
+      border: 1px solid var(--border-color);
+      color: #334155;
+      padding: 0.45rem 0.9rem;
+      border-radius: var(--radius-full);
+      font-size: 0.825rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .prompt-chip:hover {
+      background: rgba(56, 189, 248, 0.12);
+      border-color: var(--tech-cyan);
+      color: #0284C7;
+      transform: translateY(-1px);
+    }
+
+    /* Caja de Entrada de Chat */
+    .chat-input-area {
+      padding: 1rem 1.25rem;
+      background: #FFFFFF;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .chat-form {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: #F1F5F9;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 0.4rem 0.6rem 0.4rem 1rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .chat-form:focus-within {
+      border-color: var(--tech-cyan);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+      background: #FFFFFF;
+    }
+
+    .chat-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: #0F172A;
+      font-family: inherit;
+      font-size: 0.95rem;
+      outline: none;
+      padding: 0.4rem 0;
+    }
+
+    .chat-input::placeholder {
+      color: #94A3B8;
+    }
+
+    .btn-send {
+      background: var(--accent-gradient);
+      color: white;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(56, 189, 248, 0.35);
+    }
+
+    .btn-send:hover:not(:disabled) {
+      opacity: 0.92;
+      transform: scale(1.04);
+    }
+
+    .btn-send:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    /* Indicador de Escritura */
+    .typing-indicator {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 0.75rem 1rem;
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      width: fit-content;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+    }
+
+    .typing-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--tech-cyan);
+      border-radius: 50%;
+      animation: typingBounce 1.4s infinite ease-in-out both;
+    }
+
+    .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+    .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+    .typing-dot:nth-child(3) { animation-delay: 0s; }
+
+    @keyframes typingBounce {
+      0%, 80%, 100% { transform: scale(0); opacity: 0.4; }
+      40% { transform: scale(1); opacity: 1; }
+    }
+
+    /* Tarjeta de Error Visual */
+    .error-card {
+      background: var(--danger-bg);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      color: #991B1B;
+      font-size: 0.88rem;
+    }
+
+    .error-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 700;
+      color: #EF4444;
+    }
+
+    .error-card-actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.25rem;
+    }
+
+    .btn-error-fix {
+      background: #EF4444;
+      color: white;
+      border: none;
+      padding: 0.35rem 0.85rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-error-fix:hover {
+      background: #DC2626;
+    }
+
+    /* =========================================
+       MODAL DE CONFIGURACIÓN DE API KEY
+       ========================================= */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .modal-backdrop.show {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal-dialog {
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 520px;
+      box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
+      overflow: hidden;
+      transform: scale(0.96);
+      transition: transform 0.25s ease;
+    }
+
+    .modal-backdrop.show .modal-dialog {
+      transform: scale(1);
+    }
+
+    .modal-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #F8FAFC;
+    }
+
+    .modal-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #0F172A;
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      background: #FFFFFF;
+    }
+
+    .modal-info-box {
+      background: rgba(2, 132, 199, 0.08);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1rem;
+      font-size: 0.85rem;
+      color: #0369A1;
+      line-height: 1.5;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .form-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #0F172A;
+    }
+
+    .input-group-secure {
+      display: flex;
+      align-items: center;
+      background: #F8FAFC;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 0 0.5rem;
+      transition: border-color 0.2s;
+    }
+
+    .input-group-secure:focus-within {
+      border-color: var(--tech-cyan);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+    }
+
+    .input-group-secure input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      padding: 0.75rem 0.5rem;
+      color: #0F172A;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      outline: none;
+    }
+
+    .modal-footer {
+      padding: 1.25rem 1.5rem;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 0.75rem;
+      background: #F8FAFC;
+    }
+
+    .btn-secondary {
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 0.6rem 1.1rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-secondary:hover {
+      background: #F1F5F9;
+      color: #0F172A;
+    }
+
+    .btn-danger {
+      background: var(--danger-bg);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #DC2626;
+      padding: 0.6rem 1rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-danger:hover {
+      background: rgba(239, 68, 68, 0.2);
+    }
+
+    .btn-save-key {
+      background: var(--accent-gradient);
+      border: none;
+      color: white;
+      padding: 0.6rem 1.25rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      box-shadow: 0 2px 8px rgba(56, 189, 248, 0.3);
+    }
+
+    .btn-save-key:hover {
+      opacity: 0.92;
+    }
+
+    /* =========================================
+       PIE DE PÁGINA
+       ========================================= */
+    .footer {
+      margin-top: auto;
+      border-top: 1px solid var(--border-color);
+      padding: 2.5rem 0;
+      background: #FFFFFF;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    .footer-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .footer-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: #334155;
+      font-weight: 600;
+    }
+
+    /* Responsive */
+    @media (max-width: 968px) {
+      .hero-layout {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+      .hero-text-col {
+        text-align: center;
+      }
+      .hero-text-col .hero-subtitle {
+        margin: 0 auto 2rem;
+      }
+      .hero-text-col .contact-links {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero-section {
+        padding: 3rem 0 2rem;
+      }
+      .chat-container {
+        height: 600px;
+      }
+      .chat-header {
+        padding: 1rem;
+      }
+      .videos-grid {
+        grid-template-columns: 1fr;
+      }
+      .digital-brain-svg {
+        width: 130px;
+        height: 110px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =========================================
+       BARRA DE NAVEGACIÓN
+       ========================================= -->
+  <header class="navbar">
+    <div class="container navbar-content">
+      <a href="#" class="brand-logo">
+        <div class="brand-badge">BA</div>
+        <span>Borja Aparicio</span>
+      </a>
+
+      <div class="nav-actions">
+        <!-- Botón de estado de la API Key -->
+        <button class="btn-key-status" id="btnOpenKeyModal" title="Configurar tu Gemini API Key">
+          <span class="status-dot" id="navKeyDot"></span>
+          <span id="navKeyText">Configurar API Key</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- =========================================
+         ESCENA 1: CABECERA & PERFIL PROFESIONAL
+         ========================================= -->
+    <section class="hero-section" id="hero">
+      <div class="container">
+        <div class="hero-layout">
+          <!-- Columna Izquierda: Información & CTA -->
+          <div class="hero-text-col">
+            <div class="hero-badge">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+              Disponible para proyectos en Inteligencia Artificial & Data Science
+            </div>
+
+            <h1 class="hero-title">
+              Hola, soy <span class="gradient-text">Borja Aparicio</span>
+            </h1>
+
+            <p class="hero-subtitle">
+              Especialista en Inteligencia Artificial, Ciencia de Datos y Redes Neuronales. Desarrollando soluciones escalables, arquitecturas de software y modelos de lenguaje de vanguardia.
+            </p>
+
+            <!-- Enlaces de Contacto CTA -->
+            <div class="contact-links">
+              <a href="mailto:apariciocoronadoborja@gmail.com" class="btn-contact btn-primary-action">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+                Contactar por Email
+              </a>
+
+              <a href="https://www.linkedin.com/in/apariciocoronadoborja/" target="_blank" rel="noopener noreferrer" class="btn-contact">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.67 1.67 0 1 0 0-3.34 1.67 1.67 0 0 0 0 3.34m1.4 9.74V10.13H5.06v8.37h2.8z"/></svg>
+                LinkedIn
+              </a>
+
+              <a href="https://github.com/apariciocoronadoborja" target="_blank" rel="noopener noreferrer" class="btn-contact">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
+                GitHub
+              </a>
+
+              <a href="#asistente-ia" class="btn-contact">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z"></path></svg>
+                Asistente IA
+              </a>
+            </div>
+          </div>
+
+          <!-- Columna Derecha: Imagen a la derecha del nombre ocupando media pantalla -->
+          <div class="hero-image-col">
+            <div class="hero-image-wrapper">
+              <div class="hero-image-glow"></div>
+              <img src="borja.jpg" alt="Borja Aparicio Coronado" class="hero-profile-img" />
+              <div class="hero-image-tech-badge">
+                <span class="brain-pulse-dot"></span>
+                <span>Borja Aparicio • AI & Data Science</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================
+         ESCENA 2: TARJETAS DE VÍDEO MULTIMEDIA
+         ========================================= -->
+    <section class="section-container" id="videos">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Multimedia</span>
+          <h2 class="section-title">Conóceme en Acción</h2>
+          <p class="section-desc">
+            Breves cápsulas en vídeo sobre mi propuesta de valor, experiencia en proyectos reales y dominio técnico.
+          </p>
+
+          <!-- Barra de Control de Reproducción Continua -->
+          <div class="video-playlist-bar">
+            <button class="btn-playlist-play-all" id="btnPlayAllVideos" type="button">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              <span>Reproducir Todos Seguidos</span>
+            </button>
+            <div class="autoplay-indicator" id="autoplayIndicator">
+              <span class="brain-pulse-dot"></span>
+              <span id="autoplayStatusText">Reproducción continua automática activa</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Carrusel de Vídeos con Scroll Horizontal, Navegación y Píldoras -->
+        <div class="videos-carousel-wrapper">
+          <!-- Botón de scroll hacia el vídeo anterior -->
+          <button class="videos-nav-btn videos-nav-prev" id="btnVideoPrev" type="button" aria-label="Vídeo anterior" title="Vídeo anterior">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          </button>
+
+          <!-- Pista con Scroll Horizontal Snap -->
+          <div class="videos-grid" id="videosGridTrack">
+            <!-- Tarjeta 1: Pitch & Servicios de IA -->
+            <article class="video-card" id="video-card-0">
+              <!-- Columna Izquierda: Vídeo -->
+              <div class="video-card-media">
+                <div class="video-wrapper">
+                  <span class="video-badge">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                    Elevator Pitch
+                  </span>
+                  <video id="video-pitch" data-index="0" data-title="Elevator Pitch" controls autoplay muted playsinline preload="auto">
+                    <source src="pitch.mp4" type="video/mp4" />
+                    <source src="videos/pitch.mp4" type="video/mp4" />
+                    Tu navegador no soporta reproducción de vídeos MP4.
+                  </video>
+                  <div class="video-fallback-msg">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
+                    <span>Vídeo: Presentación Personal</span>
+                    <code>pitch.mp4</code>
+                  </div>
+                  <!-- Botón flotante para activar audio del autoplay -->
+                  <button type="button" class="video-unmute-badge" id="btnUnmuteVideo" title="Activar sonido del vídeo">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
+                    <span>Activar Audio</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Columna Derecha: Servicios Ofrecidos -->
+              <div class="video-card-services">
+                <div>
+                  <div class="services-header-badge-row">
+                    <span class="video-seq-badge">Vídeo 1 de 3 • Elevator Pitch</span>
+                    <span class="tag" style="background:rgba(2,132,199,0.08); color:#0284C7; font-weight:700;">Servicios Especializados</span>
+                  </div>
+                  <h3 class="services-headline">Servicios de Inteligencia Artificial & Data Science</h3>
+                  <p class="services-intro-text">
+                    Soluciones integrales de alto impacto técnico y estratégico para empresas que buscan liderar con IA:
+                  </p>
+
+                  <div class="services-grid-list">
+                    <div class="service-box">
+                      <div class="service-box-header">
+                        <span class="service-box-icon">🧠</span>
+                        <h4 class="service-box-title">Consultoría & Redes Neuronales</h4>
+                      </div>
+                      <p class="service-box-desc">
+                        Modelos de Deep Learning (ANN, CNN, Transformers), visión computacional y modelos predictivos a medida.
+                      </p>
+                    </div>
+
+                    <div class="service-box">
+                      <div class="service-box-header">
+                        <span class="service-box-icon">⚡</span>
+                        <h4 class="service-box-title">Arquitecturas RAG & LLMs</h4>
+                      </div>
+                      <p class="service-box-desc">
+                        Asistentes virtuales inteligentes con recuperación aumentada, embeddings y agentes autónomos conectados a datos privados.
+                      </p>
+                    </div>
+
+                    <div class="service-box">
+                      <div class="service-box-header">
+                        <span class="service-box-icon">📊</span>
+                        <h4 class="service-box-title">Ciencia de Datos & Analítica</h4>
+                      </div>
+                      <p class="service-box-desc">
+                        Pipelines ETL avanzados, clustering, análisis exploratorio masivo y cuadros de mando visuales de alto valor.
+                      </p>
+                    </div>
+
+                    <div class="service-box">
+                      <div class="service-box-header">
+                        <span class="service-box-icon">🌐</span>
+                        <h4 class="service-box-title">Desarrollo Full Stack & Cloud</h4>
+                      </div>
+                      <p class="service-box-desc">
+                        APIs robustas en Python (FastAPI/Flask), frontend reactivo y despliegue contenerizado en Docker y Google Cloud.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="services-cta-bar">
+                  <a href="#asistente-ia" class="btn-ask-service">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z"></path></svg>
+                    <span>Consultar al Asistente IA sobre estos servicios</span>
+                  </a>
+                  <a href="mailto:apariciocoronado@gmail.com" class="tag" style="text-decoration:none; color:#0284C7; font-weight:600;">
+                    ✉️ Solicitar propuesta
+                  </a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Tarjeta 2: Proyecto Destacado & Arquitectura -->
+            <article class="video-card" id="video-card-1">
+              <!-- Columna Izquierda: Vídeo -->
+              <div class="video-card-media">
+                <div class="video-wrapper">
+                  <span class="video-badge">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                    Demo Técnica
+                  </span>
+                  <video id="video-proyecto" data-index="1" data-title="Proyecto Destacado" controls preload="metadata" playsinline>
+                    <source src="proyecto.mp4" type="video/mp4" />
+                    <source src="videos/proyecto.mp4" type="video/mp4" />
+                    Tu navegador no soporta reproducción de vídeos MP4.
+                  </video>
+                  <div class="video-fallback-msg">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
+                    <span>Vídeo: Caso de Estudio</span>
+                    <code>proyecto.mp4</code>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Columna Derecha: Servicios Ofrecidos -->
+              <div class="video-card-services">
+                <div>
+                  <div class="services-header-badge-row">
+                    <span class="video-seq-badge">Vídeo 2 de 3 • Caso de Estudio</span>
+                    <span class="tag" style="background:rgba(2,132,199,0.08); color:#0284C7; font-weight:700;">Desarrollo & Arquitectura</span>
+                  </div>
+                  <h3 class="services-headline">Servicios de Arquitectura, Modelos & Despliegue</h3>
+                  <p class="services-intro-text">
+                    Desarrollo completo desde la prueba de concepto hasta sistemas escalables en producción:
+                  </p>
+
+                  <div class="services-grid-list">
+                    <div class="service-box">
+                      <div class="service-box-header">
+                        <span class="service-box-icon">🚀</span>
+                        <h4 class="service-box-title">Soluciones End-to-End</h4>
+                      </div>
+                      <p class="service-box-desc">
+                        Ciclo de vida completo: captura de datos, entrenamiento del modelo, orquestación y API productiva.
+                      </p>
+                    </div>
+
+                    <div class="service-box">
+                      <div class="service-box-header">
+                        <span class="service-box-icon">☁️</span>
+                        <h4 class="service-box-title">Infraestructura & Microservicios</h4>
+                      </div>
+                      <p class="service-box-desc">
+                        Arquitecturas desacopladas, contenerización en Docker y despliegues en Google Cloud Platform con alta disponibilidad.
+                      </p>
+                    </div>
+
+                    <div class="service-box">
+                      <div class="service-box-header">
+                        <span class="service-box-icon">🛡️</span>
+                        <h4 class="service-box-title">Optimización de Rendimiento</h4>
+                      </div>
+                      <p class="service-box-desc">
+                        Reducción drástica de tiempos de inferencia, control de deriva de datos y validación continua automatizada.
+                      </p>
+                    </div>
+
+                    <div class="service-box">
+                      <div class="service-box-header">
+                        <span class="service-box-icon">🔗</span>
+                        <h4 class="service-box-title">Integración de Ecosistemas</h4>
+                      </div>
+                      <p class="service-box-desc">
+                        Conexión de modelos de lenguaje con bases vectoriales (Chroma/FAISS) y sistemas de información existentes.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="services-cta-bar">
+                  <a href="#asistente-ia" class="btn-ask-service">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z"></path></svg>
+                    <span>Preguntar por casos prácticos de arquitectura</span>
+                  </a>
+                  <a href="https://github.com/apariciocoronadoborja" target="_blank" rel="noopener noreferrer" class="tag" style="text-decoration:none; color:#0284C7; font-weight:600;">
+                    💻 Ver repositorios GitHub
+                  </a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Tarjeta 3: Habilidades & Metodología -->
+            <article class="video-card" id="video-card-2">
+              <!-- Columna Izquierda: Vídeo -->
+              <div class="video-card-media">
+                <div class="video-wrapper">
+                  <span class="video-badge">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                    Stack & Metodología
+                  </span>
+                  <video id="video-habilidades" data-index="2" data-title="Habilidades & Metodología" controls preload="metadata" playsinline>
+                    <source src="habilidades.mp4" type="video/mp4" />
+                    <source src="videos/habilidades.mp4" type="video/mp4" />
+                    Tu navegador no soporta reproducción de vídeos MP4.
+                  </video>
+                  <div class="video-fallback-msg">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
+                    <span>Vídeo: Stack & Competencias</span>
+                    <code>habilidades.mp4</code>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Columna Derecha: Servicios Ofrecidos -->
+              <div class="video-card-services">
+                <div>
+                  <div class="services-header-badge-row">
+                    <span class="video-seq-badge">Vídeo 3 de 3 • Habilidades & Stack</span>
+                    <span class="tag" style="background:rgba(2,132,199,0.08); color:#0284C7; font-weight:700;">Garantía & Metodología</span>
+                  </div>
+                  <h3 class="services-headline">Metodología de Trabajo, Stack Técnico & Garantía</h3>
+                  <p class="services-intro-text">
+                    Cultura de desarrollo rigurosa, ágil y comprometida con el valor medible:
+                  </p>
+
+                  <div class="services-grid-list">
+                    <div class="service-box">
+                      <div class="service-box-header">
+                        <span class="service-box-icon">🔄</span>
+                        <h4 class="service-box-title">Gestión Ágil & Entregas Rápidas</h4>
+                      </div>
+                      <p class="service-box-desc">
+                        Sprints iterativos Scrum/Kanban, feedback continuo y entregables funcionales con visibilidad total.
+                      </p>
+                    </div>
+
+                    <div class="service-box">
+                      <div class="service-box-header">
+                        <span class="service-box-icon">🛠️</span>
+                        <h4 class="service-box-title">Stack Tecnológico de Vanguardia</h4>
+                      </div>
+                      <p class="service-box-desc">
+                        Python (PyTorch, TensorFlow, Pandas), SQL, JavaScript, React, Tailwind y bases vectoriales de última generación.
+                      </p>
+                    </div>
+
+                    <div class="service-box">
+                      <div class="service-box-header">
+                        <span class="service-box-icon">🤝</span>
+                        <h4 class="service-box-title">Alineamiento Técnico-Negocio</h4>
+                      </div>
+                      <p class="service-box-desc">
+                        Capacidad demostrada para traducir retos comerciales en arquitecturas técnicas claras y viables.
+                      </p>
+                    </div>
+
+                    <div class="service-box">
+                      <div class="service-box-header">
+                        <span class="service-box-icon">📖</span>
+                        <h4 class="service-box-title">Código Limpio & Documentación</h4>
+                      </div>
+                      <p class="service-box-desc">
+                        Estructura modular, tipado estricto, pruebas unitarias exhaustivas y documentación técnica completa.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="services-cta-bar">
+                  <a href="#asistente-ia" class="btn-ask-service">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z"></path></svg>
+                    <span>Preguntar por disponibilidad para proyectos</span>
+                  </a>
+                  <a href="https://www.linkedin.com/in/apariciocoronadoborja/" target="_blank" rel="noopener noreferrer" class="tag" style="text-decoration:none; color:#0284C7; font-weight:600;">
+                    💼 Perfil LinkedIn
+                  </a>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <!-- Botón de scroll hacia el vídeo siguiente -->
+          <button class="videos-nav-btn videos-nav-next" id="btnVideoNext" type="button" aria-label="Vídeo siguiente" title="Vídeo siguiente">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+
+          <!-- Píldoras para scrollear directamente a un vídeo -->
+          <div class="carousel-pills-row" id="carouselPillsRow">
+            <button class="carousel-pill-btn active" data-index="0" type="button">
+              <span>1. Elevator Pitch</span>
+            </button>
+            <button class="carousel-pill-btn" data-index="1" type="button">
+              <span>2. Proyecto Destacado</span>
+            </button>
+            <button class="carousel-pill-btn" data-index="2" type="button">
+              <span>3. Habilidades & Metodología</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         ESCENA 3: PATRÓN INTENSIFICADO & CEREBRO DIGITAL ANIMADO EN #38BDF8
+         ========================================================================= -->
+    <section class="section-container" id="asistente-ia">
+      <div class="container">
+        <!-- Encabezado de la Escena 3 con Cerebro Digital Animado en #38BDF8 -->
+        <div class="digital-brain-container">
+          <div class="brain-glow-halo"></div>
+          
+          <!-- SVG del Cerebro Digital Animado en #38BDF8 -->
+          <svg class="digital-brain-svg" viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Conexiones y líneas de circuitos neuronales -->
+            <g stroke="#38BDF8" stroke-width="1.8" opacity="0.85">
+              <!-- Hemisferio Izquierdo -->
+              <path class="synapse-path" d="M96 25 C75 22, 50 35, 42 55 C35 70, 38 90, 48 105 C55 115, 70 125, 96 130" />
+              <path class="synapse-path" d="M96 45 C78 45, 60 55, 56 75 C52 90, 65 105, 96 112" />
+              <path class="synapse-path" d="M96 68 C80 68, 72 80, 75 92 C78 100, 88 102, 96 95" />
+              
+              <!-- Hemisferio Derecho -->
+              <path class="synapse-path" d="M104 25 C125 22, 150 35, 158 55 C165 70, 162 90, 152 105 C145 115, 130 125, 104 130" />
+              <path class="synapse-path" d="M104 45 C122 45, 140 55, 144 75 C148 90, 135 105, 104 112" />
+              <path class="synapse-path" d="M104 68 C120 68, 128 80, 125 92 C122 100, 112 102, 104 95" />
+              
+              <!-- Conexiones Interhemisféricas (Cuerpo Calloso) -->
+              <line x1="88" y1="35" x2="112" y2="35" stroke-dasharray="3,3" />
+              <line x1="80" y1="58" x2="120" y2="58" stroke-dasharray="3,3" />
+              <line x1="75" y1="85" x2="125" y2="85" stroke-dasharray="3,3" />
+              <line x1="85" y1="110" x2="115" y2="110" stroke-dasharray="3,3" />
+
+              <!-- Enlaces transversales de sinapsis -->
+              <line x1="42" y1="55" x2="70" y2="70" />
+              <line x1="158" y1="55" x2="130" y2="70" />
+              <line x1="48" y1="105" x2="75" y2="92" />
+              <line x1="152" y1="105" x2="125" y2="92" />
+            </g>
+
+            <!-- Nodos Neuronales Palpitantes en #38BDF8 -->
+            <g fill="#38BDF8">
+              <!-- Nodos Hemisferio Izquierdo -->
+              <circle class="synapse-node" cx="96" cy="25" r="4.2" />
+              <circle class="synapse-node" cx="65" cy="28" r="3.5" />
+              <circle class="synapse-node" cx="42" cy="55" r="4" />
+              <circle class="synapse-node" cx="70" cy="50" r="3.5" />
+              <circle class="synapse-node" cx="38" cy="85" r="3.8" />
+              <circle class="synapse-node" cx="60" cy="78" r="3.2" />
+              <circle class="synapse-node" cx="48" cy="105" r="4.2" />
+              <circle class="synapse-node" cx="75" cy="92" r="3.5" />
+              <circle class="synapse-node" cx="96" cy="130" r="4" />
+
+              <!-- Nodos Hemisferio Derecho -->
+              <circle class="synapse-node" cx="104" cy="25" r="4.2" />
+              <circle class="synapse-node" cx="135" cy="28" r="3.5" />
+              <circle class="synapse-node" cx="158" cy="55" r="4" />
+              <circle class="synapse-node" cx="130" cy="50" r="3.5" />
+              <circle class="synapse-node" cx="162" cy="85" r="3.8" />
+              <circle class="synapse-node" cx="140" cy="78" r="3.2" />
+              <circle class="synapse-node" cx="152" cy="105" r="4.2" />
+              <circle class="synapse-node" cx="125" cy="92" r="3.5" />
+              <circle class="synapse-node" cx="104" cy="130" r="4" />
+
+              <!-- Nodos Centrales -->
+              <circle class="synapse-node" cx="100" cy="45" r="4.5" />
+              <circle class="synapse-node" cx="100" cy="72" r="5" />
+              <circle class="synapse-node" cx="100" cy="100" r="4.5" />
+            </g>
+          </svg>
+        </div>
+
+        <div class="section-header" style="margin-bottom: 2rem;">
+          <h2 class="section-title">Asistente Virtual Interactivo</h2>
+          <p class="section-desc">
+            Consulta cualquier detalle sobre mi perfil profesional, proyectos o formación. Respaldado por Google Gemini y base de conocimiento RAG.
+          </p>
+        </div>
+
+        <div class="chat-container">
+          <!-- Cabecera del Chat -->
+          <div class="chat-header">
+            <div class="chat-assistant-info">
+              <div class="assistant-avatar">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path><path d="M15 13v2"></path><path d="M9 13v2"></path></svg>
+              </div>
+              <div>
+                <div class="assistant-title">
+                  <span>Asistente de Borja</span>
+                  <span class="model-badge" id="chatModelBadge">Gemini 2.5 Flash</span>
+                </div>
+                <div class="assistant-status">
+                  <span class="status-dot active"></span>
+                  <span>En línea • Respuestas basadas en perfil real (RAG)</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="chat-controls">
+              <!-- Botón Limpiar Historial -->
+              <button class="btn-icon" id="btnClearChat" title="Limpiar conversación">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Ventana de Mensajes -->
+          <div class="chat-messages" id="chatMessages">
+            <!-- Mensaje de bienvenida inicial -->
+            <div class="message model">
+              <div class="message-avatar">IA</div>
+              <div class="message-bubble">
+                <p>👋 ¡Hola! Soy el asistente virtual de <strong>Borja Aparicio Coronado</strong>.</p>
+                <p>Estoy aquí para responder cualquier pregunta que tengas sobre su experiencia laboral, proyectos, habilidades técnicas en Data Science e IA, o cómo agendar una reunión o entrevista de trabajo.</p>
+                <p style="font-size:0.825rem; color:var(--text-muted); margin-top:0.4rem;">
+                  <em>Nota: Para activar las respuestas en tiempo real, ingresa tu Gemini API Key mediante el botón superior.</em>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sugerencias de Preguntas Rápidas -->
+          <div class="quick-prompts">
+            <button class="prompt-chip" data-prompt="¿Cuál es tu formación y especialidad en Data Science e Inteligencia Artificial?">🎓 Data Science & IA</button>
+            <button class="prompt-chip" data-prompt="Háblame de los proyectos más relevantes en los que has trabajado.">🚀 Proyectos destacados</button>
+            <button class="prompt-chip" data-prompt="¿Qué experiencia tienes implementando modelos RAG y Redes Neuronales?">🧠 Redes Neuronales & RAG</button>
+            <button class="prompt-chip" data-prompt="¿Cómo puedo contactar contigo para una entrevista?">📅 Contacto / Entrevista</button>
+          </div>
+
+          <!-- Formulario de Entrada -->
+          <div class="chat-input-area">
+            <form class="chat-form" id="chatForm">
+              <input 
+                type="text" 
+                class="chat-input" 
+                id="chatInput" 
+                placeholder="Escribe una pregunta sobre mi perfil profesional..." 
+                autocomplete="off"
+              />
+              <button type="submit" class="btn-send" id="btnSend" title="Enviar mensaje">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- =========================================
+       MODAL DE CONFIGURACIÓN DE GEMINI API KEY
+       ========================================= -->
+  <div class="modal-backdrop" id="keyModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 2-2 2m-6 6 4 4 2-2L9 3l-4 4 4 4"></path><path d="m15 11-4-4"></path><circle cx="6" cy="18" r="4"></circle></svg>
+          Configuración Gemini API Key
+        </h3>
+        <button class="btn-icon" id="btnCloseModal">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-info-box">
+          <strong>🔒 100% Seguro y Privado:</strong> Tu clave se guarda exclusivamente en el almacenamiento local (<code>localStorage</code>) de tu navegador. Jamás se envía a ningún servidor intermediario ni queda expuesta públicamente.
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="apiKeyInput">Gemini API Key</label>
+          <div class="input-group-secure">
+            <input 
+              type="password" 
+              id="apiKeyInput" 
+              placeholder="AIzaSy..." 
+              spellcheck="false"
+            />
+            <button type="button" class="btn-icon" id="btnToggleKeyVisibility" title="Mostrar/Ocultar" style="border:none;">
+              <svg id="eyeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            </button>
+          </div>
+          <small style="color:var(--text-muted); font-size:0.75rem;">
+            ¿No tienes una clave? Puedes obtener una gratuita en <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" style="color:#0284C7; text-decoration:underline;">Google AI Studio</a>.
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="modelSelector">Modelo de Gemini</label>
+          <div class="input-group-secure" style="padding: 0 0.75rem;">
+            <select id="modelSelector" style="background:transparent; border:none; color:#0F172A; width:100%; padding:0.75rem 0; outline:none; font-family:inherit;">
+              <option value="gemini-2.5-flash" selected>gemini-2.5-flash (Recomendado - Ultrarrápido y preciso)</option>
+              <option value="gemini-1.5-flash">gemini-1.5-flash (Estable)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn-danger" id="btnDeleteKey">Eliminar Clave</button>
+        <button type="button" class="btn-secondary" id="btnCancelModal">Cancelar</button>
+        <button type="button" class="btn-save-key" id="btnSaveKey">Guardar Configuración</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- =========================================
+       JAVASCRIPT: GESTIÓN DE API, RAG & CHAT
+       ========================================= -->
+  <script>
+    /**
+     * CONFIGURACIÓN & ESTADO DE LA APLICACIÓN
+     */
+    const STORAGE_KEY = 'cv_gemini_api_key';
+    const STORAGE_MODEL = 'cv_gemini_model';
+    
+    // Elementos DOM
+    const keyModal = document.getElementById('keyModal');
+    const btnOpenKeyModal = document.getElementById('btnOpenKeyModal');
+    const btnCloseModal = document.getElementById('btnCloseModal');
+    const btnCancelModal = document.getElementById('btnCancelModal');
+    const btnSaveKey = document.getElementById('btnSaveKey');
+    const btnDeleteKey = document.getElementById('btnDeleteKey');
+    const apiKeyInput = document.getElementById('apiKeyInput');
+    const modelSelector = document.getElementById('modelSelector');
+    const btnToggleKeyVisibility = document.getElementById('btnToggleKeyVisibility');
+    const eyeIcon = document.getElementById('eyeIcon');
+    const navKeyDot = document.getElementById('navKeyDot');
+    const navKeyText = document.getElementById('navKeyText');
+    const chatModelBadge = document.getElementById('chatModelBadge');
+    const chatMessages = document.getElementById('chatMessages');
+    const chatForm = document.getElementById('chatForm');
+    const chatInput = document.getElementById('chatInput');
+    const btnSend = document.getElementById('btnSend');
+    const btnClearChat = document.getElementById('btnClearChat');
+    const promptChips = document.querySelectorAll('.prompt-chip');
+
+    // Estado del chat
+    let conversationHistory = [];
+    let isGenerating = false;
+
+    /**
+     * BASE DE CONOCIMIENTO (RAG GROUND TRUTH) & SYSTEM INSTRUCTION
+     */
+    const SYSTEM_INSTRUCTION = `
+Eres el Asistente Virtual Oficial y Embajador Profesional de Borja Aparicio Coronado.
+Tu objetivo es actuar como un sistema RAG (Retrieval-Augmented Generation), respondiendo con precisión a reclutadores, líderes técnicos y evaluadores interesados en el perfil profesional de Borja.
+
+### INSTRUCCIONES DE COMPORTAMIENTO:
+1. Tono y Estilo: Profesional, cordial, analítico, claro y conciso.
+2. Formato: Utiliza Markdown bien estructurado (negritas, listas con viñetas cuando sea apropiado).
+3. Fidelidad a los Datos (RAG Grounding): Responde basándote estrictamente en la base de conocimiento provista.
+4. Redirección Amable: Si te realizan preguntas no relacionadas con la carrera, proyectos o habilidades de Borja, declina cortésmente e invita a preguntar sobre su experiencia en Data Science, Inteligencia Artificial o desarrollo de software.
+
+### BASE DE CONOCIMIENTO PROFESIONAL (CV & DATA):
+- Nombre Completo: Borja Aparicio Coronado.
+- Titular Profesional: Especialista en Ciencia de Datos, Inteligencia Artificial y Redes Neuronales | Ingeniero de Software Full Stack.
+- Formación Académica Destacada: Título Superior en Data Science, con especialización en Inteligencia Artificial y Redes Neuronales.
+- Correo Electrónico: apariciocoronadoborja@gmail.com
+- Enlaces Públicos:
+  * LinkedIn: linkedin.com/in/apariciocoronadoborja/
+  * GitHub: github.com/apariciocoronadoborja
+- Disponibilidad: Abierto a proyectos de impacto, consultoría y contratación a tiempo completo (remoto, presencial o híbrido).
+
+### DOMINIO TÉCNICO Y COMPETENCIAS:
+- Inteligencia Artificial & Deep Learning:
+  * Redes Neuronales (ANN, CNN, RNN/LSTM, Transformers).
+  * Arquitecturas RAG (Retrieval-Augmented Generation) con bases vectoriales y embeddings.
+  * Modelos de Lenguaje Grande (LLMs): Google Gemini API, OpenAI, Anthropic, Prompt Engineering avanzado y orquestación con LangChain/LlamaIndex.
+- Data Science & Machine Learning:
+  * Python (NumPy, Pandas, Scikit-Learn, PyTorch, TensorFlow/Keras).
+  * Análisis exploratorio de datos (EDA), preprocesamiento, feature engineering y métricas de evaluación.
+- Desarrollo Web & Cloud:
+  * Frontend: HTML5, CSS3, JavaScript moderno (ES6+), React, TailwindCSS.
+  * Backend: Python (FastAPI, Flask, Django), Node.js, APIs RESTful.
+  * Bases de Datos: SQL (PostgreSQL, MySQL), NoSQL (MongoDB, Redis), Vector Databases (Chroma, Pinecone, FAISS).
+  * Cloud & DevOps: Google Cloud Platform (GCP), Docker, CI/CD, despliegues escalables.
+
+### VÍDEOS DISPONIBLES EN ESTA PÁGINA:
+- "pitch.mp4" (Elevator Pitch): Presentación ejecutiva en 1 minuto sobre propuesta de valor, visión profesional y soft skills.
+- "proyecto.mp4" (Caso de Estudio): Demostración técnica de un proyecto insignia en IA/Data Science, diseño de arquitectura y métricas alcanzadas.
+- "habilidades.mp4" (Competencias & Stack): Detalle de metodologías ágiles, dominio de redes neuronales y herramientas de vanguardia.
+
+Invita activamente a coordinar una entrevista técnica o reunión de trabajo a través de su email apariciocoronadoborja@gmail.com.
+`;
+
+    /**
+     * GESTIÓN DEL MODAL Y ALMACENAMIENTO DE LA API KEY
+     */
+    function getStoredKey() {
+      return localStorage.getItem(STORAGE_KEY) || '';
+    }
+
+    function getStoredModel() {
+      return localStorage.getItem(STORAGE_MODEL) || 'gemini-2.5-flash';
+    }
+
+    function updateKeyStatusUI() {
+      const key = getStoredKey();
+      const model = getStoredModel();
+      
+      if (key && key.trim().length > 10) {
+        navKeyDot.classList.add('active');
+        navKeyText.textContent = 'API Key Activa';
+        btnOpenKeyModal.style.borderColor = 'rgba(16, 185, 129, 0.4)';
+      } else {
+        navKeyDot.classList.remove('active');
+        navKeyText.textContent = 'Configurar API Key';
+        btnOpenKeyModal.style.borderColor = 'rgba(245, 158, 11, 0.4)';
+      }
+
+      chatModelBadge.textContent = model === 'gemini-2.5-flash' ? 'Gemini 2.5 Flash' : 'Gemini 1.5 Flash';
+    }
+
+    function openModal() {
+      apiKeyInput.value = getStoredKey();
+      modelSelector.value = getStoredModel();
+      keyModal.classList.add('show');
+      apiKeyInput.focus();
+    }
+
+    function closeModal() {
+      keyModal.classList.remove('show');
+    }
+
+    // Toggle visibilidad contraseña
+    btnToggleKeyVisibility.addEventListener('click', () => {
+      const isPass = apiKeyInput.type === 'password';
+      apiKeyInput.type = isPass ? 'text' : 'password';
+      eyeIcon.innerHTML = isPass 
+        ? '<path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path><line x1="2" y1="2" x2="22" y2="22"></line>'
+        : '<path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle>';
+    });
+
+    btnSaveKey.addEventListener('click', () => {
+      const val = apiKeyInput.value.trim();
+      const modelVal = modelSelector.value;
+      if (val) {
+        localStorage.setItem(STORAGE_KEY, val);
+      }
+      localStorage.setItem(STORAGE_MODEL, modelVal);
+      updateKeyStatusUI();
+      closeModal();
+    });
+
+    btnDeleteKey.addEventListener('click', () => {
+      if (confirm('¿Deseas eliminar la clave API guardada en este navegador?')) {
+        localStorage.removeItem(STORAGE_KEY);
+        apiKeyInput.value = '';
+        updateKeyStatusUI();
+        closeModal();
+      }
+    });
+
+    btnOpenKeyModal.addEventListener('click', openModal);
+    btnCloseModal.addEventListener('click', closeModal);
+    btnCancelModal.addEventListener('click', closeModal);
+    keyModal.addEventListener('click', (e) => {
+      if (e.target === keyModal) closeModal();
+    });
+
+    /**
+     * GESTIÓN DEL CHAT INTERACTIVO
+     */
+    function appendMessage(role, content) {
+      const msgDiv = document.createElement('div');
+      msgDiv.className = `message ${role}`;
+
+      const avatar = document.createElement('div');
+      avatar.className = 'message-avatar';
+      avatar.textContent = role === 'user' ? 'Tú' : 'IA';
+
+      const bubble = document.createElement('div');
+      bubble.className = 'message-bubble';
+
+      if (role === 'model') {
+        bubble.innerHTML = typeof marked !== 'undefined' ? marked.parse(content) : `<p>${content}</p>`;
+      } else {
+        bubble.textContent = content;
+      }
+
+      msgDiv.appendChild(avatar);
+      msgDiv.appendChild(bubble);
+      chatMessages.appendChild(msgDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+
+      return msgDiv;
+    }
+
+    function showTypingIndicator() {
+      const indicator = document.createElement('div');
+      indicator.className = 'message model';
+      indicator.id = 'typingIndicator';
+      indicator.innerHTML = `
+        <div class="message-avatar">IA</div>
+        <div class="typing-indicator">
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+        </div>
+      `;
+      chatMessages.appendChild(indicator);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function removeTypingIndicator() {
+      const el = document.getElementById('typingIndicator');
+      if (el) el.remove();
+    }
+
+    /**
+     * MANEJO VISUAL DE ERRORES EN EL CHAT
+     */
+    function appendErrorMessage(title, description, actionType = 'key') {
+      const errorDiv = document.createElement('div');
+      errorDiv.className = 'message model';
+      
+      let actionBtnHtml = '';
+      if (actionType === 'key') {
+        actionBtnHtml = `<button class="btn-error-fix" onclick="document.getElementById('btnOpenKeyModal').click()">Configurar API Key</button>`;
+      } else if (actionType === 'retry') {
+        actionBtnHtml = `<button class="btn-error-fix" onclick="retryLastMessage()">Reintentar</button>`;
+      }
+
+      errorDiv.innerHTML = `
+        <div class="message-avatar" style="background:#EF4444; color:white;">!</div>
+        <div class="error-card">
+          <div class="error-card-header">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            <span>${title}</span>
+          </div>
+          <p>${description}</p>
+          ${actionBtnHtml ? `<div class="error-card-actions">${actionBtnHtml}</div>` : ''}
+        </div>
+      `;
+      chatMessages.appendChild(errorDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    let lastUserMessageText = '';
+    function retryLastMessage() {
+      if (lastUserMessageText) {
+        handleUserSend(lastUserMessageText, false);
+      }
+    }
+
+    /**
+     * LLAMADA A LA API DE GEMINI (ENDPOINT REST DE GOOGLE AI STUDIO)
+     */
+    async function callGeminiApi(userPrompt) {
+      const apiKey = getStoredKey();
+      const model = getStoredModel();
+
+      if (!apiKey || apiKey.trim() === '') {
+        appendErrorMessage(
+          'API Key no detectada',
+          'Para interactuar en directo con el asistente necesitas una Gemini API Key gratuita. Puedes ingresarla de forma segura usando el botón superior.',
+          'key'
+        );
+        return;
+      }
+
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(apiKey)}`;
+
+      conversationHistory.push({
+        role: 'user',
+        parts: [{ text: userPrompt }]
+      });
+
+      const payload = {
+        system_instruction: {
+          parts: [{ text: SYSTEM_INSTRUCTION }]
+        },
+        contents: conversationHistory,
+        generationConfig: {
+          temperature: 0.5,
+          maxOutputTokens: 1000
+        }
+      };
+
+      showTypingIndicator();
+      isGenerating = true;
+      btnSend.disabled = true;
+
+      try {
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        removeTypingIndicator();
+
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}));
+          const status = response.status;
+          const errorMsg = errorData.error?.message || response.statusText;
+
+          if (status === 400 || status === 403) {
+            appendErrorMessage(
+              'Clave API Inválida o Sin Permisos',
+              `Google rechazó la solicitud (${status}): ${errorMsg}. Por favor verifica tu Gemini API Key en el menú de configuración.`,
+              'key'
+            );
+          } else if (status === 429) {
+            appendErrorMessage(
+              'Límite de Cuota Excedido (Rate Limit)',
+              'Has alcanzado el límite de peticiones por minuto del plan gratuito de Gemini. Espera 30 segundos y vuelve a intentarlo.',
+              'retry'
+            );
+          } else {
+            appendErrorMessage(
+              `Error del Servidor (${status})`,
+              `Hubo una incidencia con el servicio de Gemini: ${errorMsg}`,
+              'retry'
+            );
+          }
+          conversationHistory.pop();
+          return;
+        }
+
+        const data = await response.json();
+        const candidate = data.candidates?.[0];
+        const replyText = candidate?.content?.parts?.[0]?.text;
+
+        if (replyText) {
+          appendMessage('model', replyText);
+          conversationHistory.push({
+            role: 'model',
+            parts: [{ text: replyText }]
+          });
+        } else {
+          appendErrorMessage(
+            'Respuesta vacía',
+            'El modelo no generó ninguna respuesta válida. Intenta reformular tu pregunta.',
+            'retry'
+          );
+        }
+
+      } catch (err) {
+        removeTypingIndicator();
+        console.error('Error de conexión con Gemini:', err);
+        appendErrorMessage(
+          'Error de Conexión',
+          'No se pudo conectar con los servidores de Google Gemini. Comprueba tu conexión a Internet o bloqueadores de anuncios (AdBlockers).',
+          'retry'
+        );
+        conversationHistory.pop();
+      } finally {
+        isGenerating = false;
+        btnSend.disabled = false;
+      }
+    }
+
+    /**
+     * GESTIÓN DE ENVÍO DE MENSAJES
+     */
+    function handleUserSend(text, shouldAppendUserBubble = true) {
+      if (isGenerating) return;
+      const cleanText = text.trim();
+      if (!cleanText) return;
+
+      lastUserMessageText = cleanText;
+
+      if (shouldAppendUserBubble) {
+        appendMessage('user', cleanText);
+      }
+
+      callGeminiApi(cleanText);
+    }
+
+    chatForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const text = chatInput.value;
+      if (text.trim()) {
+        chatInput.value = '';
+        handleUserSend(text, true);
+      }
+    });
+
+    promptChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        const prompt = chip.getAttribute('data-prompt');
+        if (prompt) {
+          handleUserSend(prompt, true);
+        }
+      });
+    });
+
+    btnClearChat.addEventListener('click', () => {
+      if (confirm('¿Deseas reiniciar la conversación?')) {
+        conversationHistory = [];
+        chatMessages.innerHTML = `
+          <div class="message model">
+            <div class="message-avatar">IA</div>
+            <div class="message-bubble">
+              <p>Conversación reiniciada. ¿Qué más te gustaría saber acerca de <strong>Borja Aparicio</strong>?</p>
+            </div>
+          </div>
+        `;
+      }
+    });
+
+    // Inicialización al cargar la página
+    document.addEventListener('DOMContentLoaded', () => {
+      updateKeyStatusUI();
+
+      // ==============================================================
+      // GESTIÓN DE VÍDEOS: SCROLL HORIZONTAL, CARRUSEL Y AUTOPLAY
+      // ==============================================================
+      const videosGridTrack = document.getElementById('videosGridTrack');
+      const videoCards = Array.from(document.querySelectorAll('.video-card'));
+      const videoElements = Array.from(document.querySelectorAll('.video-wrapper video'));
+      const btnVideoPrev = document.getElementById('btnVideoPrev');
+      const btnVideoNext = document.getElementById('btnVideoNext');
+      const pillBtns = Array.from(document.querySelectorAll('.carousel-pill-btn'));
+      const btnPlayAll = document.getElementById('btnPlayAllVideos');
+      const autoplayStatusText = document.getElementById('autoplayStatusText');
+
+      let currentVisibleIndex = 0;
+
+      // Actualizar UI de píldoras y botones de flecha
+      function updateNavState(index) {
+        currentVisibleIndex = Math.max(0, Math.min(index, videoCards.length - 1));
+
+        pillBtns.forEach((pill, idx) => {
+          if (idx === currentVisibleIndex) {
+            pill.classList.add('active');
+          } else {
+            pill.classList.remove('active');
+          }
+        });
+
+        if (btnVideoPrev) {
+          btnVideoPrev.disabled = currentVisibleIndex === 0;
+        }
+        if (btnVideoNext) {
+          btnVideoNext.disabled = currentVisibleIndex === videoCards.length - 1;
+        }
+      }
+
+      // Desplazar suavemente el carrusel al vídeo deseado
+      function scrollToVideoIndex(index, smooth = true) {
+        if (!videosGridTrack || index < 0 || index >= videoCards.length) return;
+        const targetCard = videoCards[index];
+        if (targetCard) {
+          // Desplazamiento horizontal dentro del carrusel
+          const cardLeft = targetCard.offsetLeft - videosGridTrack.offsetLeft;
+          videosGridTrack.scrollTo({
+            left: cardLeft,
+            behavior: smooth ? 'smooth' : 'auto'
+          });
+          updateNavState(index);
+        }
+      }
+
+      // Detección de scroll manual (rueda, swipe táctil, trackpad)
+      if (videosGridTrack) {
+        let scrollTimeout;
+        videosGridTrack.addEventListener('scroll', () => {
+          clearTimeout(scrollTimeout);
+          scrollTimeout = setTimeout(() => {
+            const trackScrollLeft = videosGridTrack.scrollLeft;
+            let closestIndex = 0;
+            let minDistance = Infinity;
+
+            videoCards.forEach((card, idx) => {
+              const cardOffset = card.offsetLeft - videosGridTrack.offsetLeft;
+              const dist = Math.abs(trackScrollLeft - cardOffset);
+              if (dist < minDistance) {
+                minDistance = dist;
+                closestIndex = idx;
+              }
+            });
+
+            updateNavState(closestIndex);
+          }, 80);
+        }, { passive: true });
+
+        // Permitir scroll horizontal fluido con la rueda vertical del ratón al posarse sobre el carrusel
+        videosGridTrack.addEventListener('wheel', (e) => {
+          if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+            const canScrollLeft = videosGridTrack.scrollLeft > 5;
+            const canScrollRight = videosGridTrack.scrollLeft < (videosGridTrack.scrollWidth - videosGridTrack.clientWidth - 10);
+            
+            if ((e.deltaY > 0 && canScrollRight) || (e.deltaY < 0 && canScrollLeft)) {
+              e.preventDefault();
+              videosGridTrack.scrollBy({
+                left: e.deltaY * 1.8,
+                behavior: 'auto'
+              });
+            }
+          }
+        }, { passive: false });
+      }
+
+      // Botones de navegación flechas (Prev / Next)
+      if (btnVideoPrev) {
+        btnVideoPrev.addEventListener('click', () => {
+          scrollToVideoIndex(currentVisibleIndex - 1, true);
+        });
+      }
+
+      if (btnVideoNext) {
+        btnVideoNext.addEventListener('click', () => {
+          scrollToVideoIndex(currentVisibleIndex + 1, true);
+        });
+      }
+
+      // Clics en las píldoras de navegación
+      pillBtns.forEach(pill => {
+        pill.addEventListener('click', () => {
+          const idx = parseInt(pill.getAttribute('data-index') || '0', 10);
+          scrollToVideoIndex(idx, true);
+        });
+      });
+
+      // Inicializar estado de botones
+      updateNavState(0);
+
+      // Gestión de vídeos: fallback, play, pause y reproducción secuencial continua
+      videoElements.forEach(video => {
+        const wrapper = video.closest('.video-wrapper');
+        const fallback = wrapper?.querySelector('.video-fallback-msg');
+        
+        function hideFallback() {
+          if (fallback) fallback.style.display = 'none';
+        }
+
+        video.addEventListener('loadeddata', hideFallback);
+        video.addEventListener('canplay', hideFallback);
+        video.addEventListener('play', hideFallback);
+        if (video.readyState >= 2) {
+          hideFallback();
+        }
+
+        // Al iniciar reproducción: pausar otros y resaltar tarjeta
+        video.addEventListener('play', () => {
+          const currentIndex = parseInt(video.getAttribute('data-index') || '0', 10);
+          const videoTitle = video.getAttribute('data-title') || `Vídeo ${currentIndex + 1}`;
+
+          // Asegurar que el carrusel esté centrado en el vídeo en reproducción
+          scrollToVideoIndex(currentIndex, true);
+
+          // Pausar cualquier otro vídeo
+          videoElements.forEach(otherVid => {
+            if (otherVid !== video && !otherVid.paused) {
+              otherVid.pause();
+            }
+          });
+
+          // Resaltar tarjeta activa
+          videoCards.forEach((card, idx) => {
+            if (idx === currentIndex) {
+              card.classList.add('active-playing');
+            } else {
+              card.classList.remove('active-playing');
+            }
+          });
+
+          if (autoplayStatusText) {
+            autoplayStatusText.textContent = `Reproduciendo: ${videoTitle} (${currentIndex + 1}/${videoElements.length})`;
+          }
+        });
+
+        // Al pausar: limpiar tarjeta si no hay ninguno reproduciendo
+        video.addEventListener('pause', () => {
+          const isAnyPlaying = videoElements.some(v => !v.paused);
+          if (!isAnyPlaying) {
+            videoCards.forEach(c => c.classList.remove('active-playing'));
+            if (autoplayStatusText) {
+              autoplayStatusText.textContent = 'Reproducción continua automática activa';
+            }
+          }
+        });
+
+        // Al terminar el vídeo: desplazar el carrusel al siguiente y reproducir automáticamente
+        video.addEventListener('ended', () => {
+          const currentIndex = parseInt(video.getAttribute('data-index') || '0', 10);
+          const nextIndex = currentIndex + 1;
+
+          if (nextIndex < videoElements.length) {
+            const nextVideo = videoElements[nextIndex];
+            const nextTitle = nextVideo.getAttribute('data-title') || `Vídeo ${nextIndex + 1}`;
+
+            if (autoplayStatusText) {
+              autoplayStatusText.textContent = `Pasando a: ${nextTitle}...`;
+            }
+
+            // Desplazar carrusel hacia el siguiente vídeo
+            scrollToVideoIndex(nextIndex, true);
+
+            // Dar tiempo a la animación de desplazamiento y arrancar reproducción
+            setTimeout(() => {
+              nextVideo.play().catch(err => {
+                console.warn('Reproducción continua prevenida por el navegador:', err);
+              });
+            }, 650);
+          } else {
+            videoCards.forEach(c => c.classList.remove('active-playing'));
+            if (autoplayStatusText) {
+              autoplayStatusText.textContent = '¡Has visto todos los vídeos! Puedes repetirlos cuando quieras.';
+            }
+          }
+        });
+      });
+
+      // Botón "Reproducir Todos Seguidos"
+      if (btnPlayAll && videoElements.length > 0) {
+        btnPlayAll.addEventListener('click', () => {
+          const firstVideo = videoElements[0];
+
+          // Pausar y rebobinar
+          videoElements.forEach(v => {
+            v.pause();
+            v.currentTime = 0;
+          });
+
+          scrollToVideoIndex(0, true);
+
+          setTimeout(() => {
+            firstVideo.muted = false; // Al hacer clic explícito, se reproduce con sonido
+            firstVideo.play().catch(err => {
+              console.warn('Reproducción iniciada:', err);
+            });
+          }, 350);
+        });
+      }
+
+      // ==============================================================
+      // AUTOPLAY AL ENTRAR A LA PÁGINA & GESTIÓN DE AUDIO
+      // ==============================================================
+      const btnUnmute = document.getElementById('btnUnmuteVideo');
+      if (videoElements.length > 0) {
+        const firstVid = videoElements[0];
+        // En navegadores modernos el autoplay exige muted inicial para reproducirse sin interacción
+        firstVid.muted = true;
+        const autoPlayPromise = firstVid.play();
+        if (autoPlayPromise !== undefined) {
+          autoPlayPromise.then(() => {
+            if (btnUnmute) btnUnmute.style.display = 'inline-flex';
+          }).catch(err => {
+            console.log('El navegador pausó el autoplay a la espera de interacción:', err);
+          });
+        }
+
+        if (btnUnmute) {
+          btnUnmute.addEventListener('click', (e) => {
+            e.stopPropagation();
+            firstVid.muted = false;
+            btnUnmute.innerHTML = `
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+              <span>Audio Activado</span>
+            `;
+            setTimeout(() => {
+              btnUnmute.style.opacity = '0';
+              setTimeout(() => { btnUnmute.style.display = 'none'; }, 300);
+            }, 1200);
+          });
+        }
+      }
+    });
+  </script>
+</body>
+</html>
