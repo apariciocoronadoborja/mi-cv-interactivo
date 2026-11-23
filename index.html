@@ -548,7 +548,7 @@
       background: #0284C7;
     }
 
-    /* Tarjeta de vídeo dividida: Vídeo a la izquierda + Servicios a la derecha */
+    /* Integración limpia y orgánica: Sin cuadro exterior */
     .video-card {
       flex: 0 0 100%;
       min-width: 100%;
@@ -556,50 +556,50 @@
       box-sizing: border-box;
       scroll-snap-align: center;
       scroll-snap-stop: always;
-      background: #FFFFFF;
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      overflow: visible;
       display: grid;
-      grid-template-columns: 45% 55%;
-      align-items: stretch;
-      transition: all 0.35s ease;
-      box-shadow: 0 15px 35px -8px rgba(15, 23, 42, 0.08), 0 0 20px rgba(56, 189, 248, 0.05);
+      grid-template-columns: 46% 54%;
+      gap: 2.75rem;
+      align-items: center;
+      box-shadow: none;
       position: relative;
     }
 
     @media (max-width: 960px) {
       .video-card {
         grid-template-columns: 1fr;
+        gap: 1.75rem;
       }
     }
 
     .video-card:hover {
-      transform: translateY(-2px);
-      border-color: var(--tech-cyan);
-      box-shadow: 0 25px 45px -10px rgba(15, 23, 42, 0.12), 0 0 25px rgba(56, 189, 248, 0.2);
+      transform: none;
+      border-color: transparent;
+      box-shadow: none;
     }
 
     .video-card.active-playing {
-      border-color: #38BDF8;
-      box-shadow: 0 25px 55px -10px rgba(15, 23, 42, 0.16), 0 0 35px rgba(56, 189, 248, 0.4);
+      border-color: transparent;
+      box-shadow: none;
     }
 
-    /* Columna Izquierda: Reproductor de Vídeo (espacio ajustado) */
+    /* Columna Izquierda: Reproductor de vídeo flotante e integrado */
     .video-card-media {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      background: #020617;
+      background: transparent;
       position: relative;
-      border-right: 1px solid var(--border-color);
-      overflow: hidden;
+      border: none;
+      overflow: visible;
     }
 
     @media (max-width: 960px) {
       .video-card-media {
-        border-right: none;
-        border-bottom: 1px solid var(--border-color);
+        border: none;
       }
     }
 
@@ -608,7 +608,21 @@
       width: 100%;
       padding-top: 56.25%; /* 16:9 Aspect Ratio */
       background: #020617;
+      border-radius: var(--radius-lg);
       overflow: hidden;
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      box-shadow: 0 20px 45px -12px rgba(15, 23, 42, 0.14), 0 0 25px rgba(56, 189, 248, 0.1);
+      transition: all 0.35s ease;
+    }
+
+    .video-card:hover .video-wrapper {
+      border-color: var(--tech-cyan);
+      box-shadow: 0 25px 50px -10px rgba(15, 23, 42, 0.18), 0 0 35px rgba(56, 189, 248, 0.25);
+    }
+
+    .video-card.active-playing .video-wrapper {
+      border-color: #38BDF8;
+      box-shadow: 0 25px 60px -12px rgba(15, 23, 42, 0.22), 0 0 40px rgba(56, 189, 248, 0.4);
     }
 
     .video-wrapper video {
@@ -667,18 +681,18 @@
       transform: scale(1.05);
     }
 
-    /* Columna Derecha: Explicación de Servicios Ofrecidos */
+    /* Columna Derecha: Explicación de Servicios Ofrecidos integrada sin cuadro */
     .video-card-services {
-      padding: 2.25rem 2.4rem;
+      padding: 0;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      background: #FFFFFF;
+      justify-content: center;
+      background: transparent;
     }
 
     @media (max-width: 650px) {
       .video-card-services {
-        padding: 1.5rem 1.25rem;
+        padding: 0.5rem 0;
       }
     }
 
@@ -692,47 +706,52 @@
     }
 
     .services-headline {
-      font-size: 1.35rem;
+      font-size: 1.45rem;
       font-weight: 800;
       color: #0F172A;
       letter-spacing: -0.02em;
-      margin-bottom: 0.4rem;
-      line-height: 1.3;
+      margin-bottom: 0.45rem;
+      line-height: 1.25;
     }
 
     .services-intro-text {
-      font-size: 0.88rem;
+      font-size: 0.92rem;
       color: var(--text-muted);
-      margin-bottom: 1.25rem;
-      line-height: 1.5;
+      margin-bottom: 1.35rem;
+      line-height: 1.55;
     }
 
     .services-grid-list {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 0.85rem;
+      gap: 1rem 1.25rem;
       margin-bottom: 1.5rem;
     }
 
     @media (max-width: 650px) {
       .services-grid-list {
         grid-template-columns: 1fr;
+        gap: 0.85rem;
       }
     }
 
+    /* Items de servicio integrados sin marco rígido */
     .service-box {
-      background: #F8FAFC;
-      border: 1px solid rgba(226, 232, 240, 0.9);
-      border-radius: var(--radius-md);
-      padding: 0.85rem 1rem;
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      border-left: 3px solid #38BDF8;
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 0.95rem;
       transition: all 0.25s ease;
     }
 
     .service-box:hover {
       background: #FFFFFF;
-      border-color: var(--tech-cyan);
-      box-shadow: 0 6px 16px -2px rgba(56, 189, 248, 0.15);
-      transform: translateY(-2px);
+      border-color: rgba(56, 189, 248, 0.4);
+      border-left-color: #0284C7;
+      box-shadow: 0 8px 20px -4px rgba(56, 189, 248, 0.15);
+      transform: translateX(4px);
     }
 
     .service-box-header {
